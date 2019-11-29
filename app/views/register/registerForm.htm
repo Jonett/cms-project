@@ -1,0 +1,47 @@
+<div class="row mt-5">
+    <check if="{{ @SESSION.passwordStatusTooShort == 'TRUE' }}">
+        <div class="alert alert-success w-100" role="alert">
+            Salasana liian lyhyt, salasanan oltava vähintään 6 merkkiä pitkä.
+        </div>
+    </check>
+    <check if="{{ @SESSION.registerationCodeStatus == 'TRUE' }}">
+        <div class="alert alert-success w-100" role="alert">
+            Väärä rekisteröitymis koodi!
+        </div>
+    </check>
+    <check if="{{ @SESSION.passwordStatus == 'TRUE' }}">
+        <div class="alert alert-success w-100" role="alert">
+            Salasanat eivät täsmää
+        </div>
+    </check>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header text-center">
+                <h1>
+                    Rekisteröidy
+                </h1>
+            </div>
+            <div class="card-body">
+                <form action="/timepuncher/registernewuser" method="post">
+                    <div class="form-group">
+                        <label for="email">Sähköpostiosoitteesi</label>
+                        <input type="email" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Salasana</label>
+                        <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordCheck">Salasana uudelleen</label>
+                        <input type="password" name="passwordCheck" class="form-control" id="passwordCheck">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerationCode">Rekisteröitymis koodi</label>
+                        <input type="text" name="registerationCode" class="form-control" id="registerationCode">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Rekisteröidy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

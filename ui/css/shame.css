@@ -1,0 +1,31 @@
+/* Dunno where to put this stuff yet */
+
+/* nav styles */
+
+
+@font-face {
+    font-family: 'digital-7regular';
+    src: url('ui/fonts/digital-7-webfont.woff2') format('woff2'),
+         url('ui/fonts/digital-7-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.font-style-digital {
+    font-size: 55px !important;
+    font-family: 'digital-7regular' !important;
+}
+.start, .stop, .break {
+    min-height: 100px !important;
+}
+
+#stopCard {
+    display: none;
+}
+
+#footer {
+    margin-top: 40px !important;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    
+}
