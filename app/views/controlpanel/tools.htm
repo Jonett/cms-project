@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-header w-100 text-center">
+                    <h4>
+                        Työvälineet
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <table id="toolsTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Nimi</th>
+                            <th>Tunti hinta</th>
+                            <th>Poista käytöstä</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <repeat group="{{ @tools }}" value="{{ @tool }}">
+                        <tr>
+                            <td>
+                                <form action="controlpanel/updatetoolname" method="post">
+                                    <input name="tool" type="hidden" value="{{ @tool.hid }}">
+                                    <div class="input-group mt-3">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-primary" type="submit" id="button-updateName">Päivitä nimi</button>
+                                        </div>
+                                        <input value="{{ @tool.name }}" name="name" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-updateName">
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="controlpanel/updatetoolpph" method="post">
+                                    <input name="tool" type="hidden" value="{{ @tool.hid }}">
+                                    <div class="input-group mt-3">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-primary" type="submit" id="button-updatepph">Päivitä hinta</button>
+                                        </div>
+                                        <input value="{{ @tool.pph }}" name="pph" type="number" step="0.01" class="form-control" placeholder="" aria-label="" aria-describedby="button-updatepph">
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="controlpanel/updatetoolstatus" method="post">
+                                    <check if="{{ @tool.status == '1' }}">
+                                        <true>
+                                        <input name="current" value="{{ @tool.status }}" type="hidden">
+                                        <input name="tool" type="hidden" value="{{ @tool.hid }}">
+                                        <button class="btn btn-warning mt-3" type="submit" id="button-disable-tool">Poista käytöstä</button>
+                                        </true>
+                                        <false>
+                                        <input name="current" value="{{ @tool.status }}" type="hidden">
+                                        <input name="tool" type="hidden" value="{{ @tool.hid }}">
+                                        <button class="btn btn-success mt-3" type="submit" id="button-enable-tool">Ota käyttöön</button>
+                                        </false>
+                                    </check>
+                                </form>
+                            </td>
+                        </tr>
+                    </repeat>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 mt-4">
+        <div class="card-header text-center">
+            <h4>
+                Lisää uusi työväline
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-10 offset-md-1">
+                    <form action="controlpanel/newtool" method="post">
+                        <div class="form-group row">
+                            <label for="newtoolname">Uuden työvälineen nimi</label>
+                            <input name="newtoolname" type="text" class="form-control" id="newtoolname">
+                        </div>
+                        <div class="form-group row">
+                            <label for="newtoolpph">Tunti hinta</label>
+                            <input name="newtoolpph" type="number" value="00.00" step="0.01" class="form-control" id="newtoolpph">
+                        </div>
+                        <div class="form-group row mt-5">
+                            <button type="submit" class="btn btn-primary w-100">Tallenna</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

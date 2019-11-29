@@ -1,8 +1,17 @@
 <div class="container">
+    <check if="{{ @SESSION.disabledAccountWarning == 'TRUE' }}">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success w-100" role="alert">
+                    Käyttöoikeutesi palveluun on poistettu, ota yhteyttä esimieheesi.
+                </div>
+            </div>
+        </div>
+    </check>
     <div class="row">
         <div class="col-12">
             <div class="tab-content" id="homeContent">
-                 <include href="home/loginForm.htm"/>
+                <include href="home/loginForm.htm"/>
             </div>
         </div>
     </div>

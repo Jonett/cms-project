@@ -23,7 +23,7 @@ class dashboardController extends dashboardModel {
     
     public function dashboard(){
         $f3 = $this->f3;
-        $f3->set('navMessage', 'Tervetuloa '.$this->user->userEmail);
+        $f3->set('navMessage', $this->user->userEmail);
         $f3->set('content', 'dashboard/dashboard.htm');
         echo \Template::instance()->render('layout.htm');
     }

@@ -24,8 +24,11 @@ class authenticationController extends authenticationModel {
         if(strlen($userPassword) > 5){
             if($this->isUser($userEmail) && $userId = $this->autheticateUser($userEmail, $userPassword)){
                 $user = new user($this->f3, $userId);
+                if($user->status == 0){
+                    $this->f3->set('SESSION.disabledAccountWarning', 'TRUE');
+                    $this->f3->reroute('/');
+                }
                 $user->startUserSession();
-                
                 $this->f3->reroute('/dashboard');
             }else{
                 $this->f3->reroute('/');

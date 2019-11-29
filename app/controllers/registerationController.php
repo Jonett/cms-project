@@ -30,7 +30,6 @@ class registerationController extends registerationModel{
         if($registerationCodeStatus){
             $f3->set('invalidCode', 'TRUE');
         }
-        $f3->set('navMessage', 'Tervetuloa uusi käyttäjä');
         $f3->set('content', 'register/register.htm');
         echo \Template::instance()->render('layout.htm');
         $f3->clear('SESSION');
@@ -54,7 +53,6 @@ class registerationController extends registerationModel{
             $organisationId = $f3->get('SESSION.organisationId');
             $userPasswordHash =  password_hash($userPassword, PASSWORD_BCRYPT);
             $this->saveNewUser($userEmail, $userPasswordHash, $organisationId);
-            
             $f3->reroute('/');
         }else{
             $f3->set('SESSION.registerationCodeStatus', 'TRUE');

@@ -16,6 +16,8 @@ class user extends database {
     public $userId;
     public $userEmail;
     public $userOid;
+    public $organisationAdmin;
+    public $status;
 
     public function __construct($f3, $id) {
         parent::__construct($f3);
@@ -31,15 +33,33 @@ class user extends database {
         $this->userOid = $userQuery[0]['oid'];
         $this->onBreak = $userQuery[0]['onBreak'];
         $this->breakTimeId = $userQuery[0]['breakTimeId'];
+        $this->organisationAdmin = $userQuery[0]['organisationAdmin'];
+        $this->status = $userQuery[0]['status'];
     }
 
     public function startUserSession() {
         $this->f3->set('SESSION.uid', $this->userId);
         $this->f3->set('SESSION.userEmail', $this->userEmail);
         $this->f3->set('SESSION.oid', $this->userOid);
+        $this->f3->set('SESSION.organisationAdmin', $this->organisationAdmin);
     }
 
     public function clearUserSession() {
         $this->f3->clear('SESSION');
+    }
+    
+    public function setStatus($status){
+        $database = $this->db;
+        $database->exec('UPDATE users SET status = '.$status.' WHERE id = '.$this->userId);
+    }
+    
+    public function setPassword($passwordHash){
+        $database = $this->db;
+        $database->exec('UPDATE users SET password = "'.$passwordHash.'" WHERE id = '.$this->userId);
+    }
+    
+    public function setEmail($email){
+        $database = $this->db;
+        $database->exec('UPDATE users SET email = "'.$email.'" WHERE id = '.$this->userId);
     }
 }

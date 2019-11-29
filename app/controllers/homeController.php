@@ -22,7 +22,6 @@ class homeController extends homeControllerModel{
         if($f3->get('SESSION.uid')){
             $f3->reroute('/punchin');
         }
-        $f3->set('navMessage', 'Tervetuloa');
         $f3->set('content', 'home/home.htm');
         echo \Template::instance()->render('layout.htm');
     }
