@@ -73,4 +73,22 @@ class controlpanelModel extends database{
         $database = $this->db;
         $database->exec('INSERT INTO punchtools ( name, oid, priceperhour ) VALUES( "'.$toolName.'", "'.$oid.'", "'.$toolpph.'" )');
     }
+    public function getClientsArray($organisationId){
+        $database = $this->db;
+        $twoWayEncrypt = new twoWayEncrypt($this->f3->HKEY);
+        $clientsQuery = $database->exec('SELECT * FROM organisationclients WHERE oid = '.$organisationId);
+        $clientsArray = array();
+        $count = 0;
+        foreach($clientsQuery as $key => $value){
+            $clientsArray[$count]['hid'] = $twoWayEncrypt->encrypt($value['id']);
+            $clientsArray[$count]['name'] = $value['name'];
+            $clientsArray[$count]['streetaddress'] = $value['streetaddress'];
+            $clientsArray[$count]['postcode'] = $value['postcode'];
+            $clientsArray[$count]['postarea'] = $value['postarea'];
+            $clientsArray[$count]['email'] = $value['email'];
+            $clientsArray[$count]['phonenumber'] = $value['phonenumber'];
+            $count++;
+        }
+        return $clientsArray;
+    }
 }

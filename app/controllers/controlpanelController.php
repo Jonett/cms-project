@@ -19,6 +19,7 @@ class controlpanelController extends controlpanelModel{
     public function controlpanel(){
         $f3 = $this->f3;
         if($f3->get('SESSION.organisationAdmin') == 1){
+            $f3->set('clients', $this->getClients());
             $f3->set('employees', $this->getEmployees());
             $f3->set('tools', $this->getTools());
         }
@@ -108,6 +109,11 @@ class controlpanelController extends controlpanelModel{
         $oid = $f3->get('SESSION.oid');
         $this->setNewTool($toolName, $toolpph, $oid);
         $f3->reroute('/controlpanel');
+    }
+    
+    private function getClients(){
+        $organisationId = $this->f3->get('SESSION.oid');
+        return $this->getClientsArray($organisationId);
     }
     
     private function getEmployees(){
