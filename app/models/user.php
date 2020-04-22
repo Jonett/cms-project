@@ -31,10 +31,10 @@ class user extends database {
         $this->userId = $userQuery[0]['id'];
         $this->userEmail = $userQuery[0]['email'];
         $this->userOid = $userQuery[0]['oid'];
-        $this->onBreak = $userQuery[0]['onBreak'];
-        $this->breakTimeId = $userQuery[0]['breakTimeId'];
-        $this->organisationAdmin = $userQuery[0]['organisationAdmin'];
         $this->status = $userQuery[0]['status'];
+        
+        $businessQuery = $database->exec('SELECT * FROM business WHERE id = ' . $this->userOid);
+        $this->organisationAdmin = ($businessQuery[0]['owner_id'] == $this->userId ? 1 : 0);
     }
 
     public function startUserSession() {
@@ -47,19 +47,20 @@ class user extends database {
     public function clearUserSession() {
         $this->f3->clear('SESSION');
     }
-    
-    public function setStatus($status){
+
+    public function setStatus($status) {
         $database = $this->db;
-        $database->exec('UPDATE users SET status = '.$status.' WHERE id = '.$this->userId);
+        $database->exec('UPDATE users SET status = ' . $status . ' WHERE id = ' . $this->userId);
     }
-    
-    public function setPassword($passwordHash){
+
+    public function setPassword($passwordHash) {
         $database = $this->db;
-        $database->exec('UPDATE users SET password = "'.$passwordHash.'" WHERE id = '.$this->userId);
+        $database->exec('UPDATE users SET password = "' . $passwordHash . '" WHERE id = ' . $this->userId);
     }
-    
-    public function setEmail($email){
+
+    public function setEmail($email) {
         $database = $this->db;
-        $database->exec('UPDATE users SET email = "'.$email.'" WHERE id = '.$this->userId);
+        $database->exec('UPDATE users SET email = "' . $email . '" WHERE id = ' . $this->userId);
     }
+
 }

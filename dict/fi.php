@@ -5,5 +5,6 @@ return array(
     "register" => 'Rekisteröidy',
     "logout" => 'Kirjaudu ulos',
     "controlpanel" => 'Hallintapaneeli',
-    "welcome" => 'Tervetuloa'
+    "welcome" => 'Tervetuloa',
+    "admin" => 'Admin'
 );

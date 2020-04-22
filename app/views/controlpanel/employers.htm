@@ -14,40 +14,42 @@
                 </tr>
             </thead>
             <tbody>
-            <repeat group="{{ @employees }}" value="{{ @employee }}">
-                <tr>
-                    <td>{{ @employee.email }}</td>
-                    <td>
-                        <form action="controlpanel/updatepassword" method="post">
-                            <div class="input-group mt-3">
-                                <input name="uid" value="{{ @employee.hid }}" type="hidden">
-                                <input name="newPassword" type="text" class="form-control" placeholder="salasanan tulee olla vähintään 6 merkkiä pitkä" aria-label="aseta uusi salasana" aria-describedby="button-saveNewPassword">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-primary" type="submit" id="button-saveNewPassword">Tallenna uusi salasana</button>
+ 
+                <repeat group="{{ @employees }}" value="{{ @employee }}">
+                    <tr>
+                        <td>{{ @employee.email }}</td>
+                        <td>
+                            <form action="controlpanel/updatepassword" method="post">
+                                <div class="input-group mt-3">
+                                    <input name="uid" value="{{ @employee.hid }}" type="hidden">
+                                    <input name="newPassword" type="text" class="form-control" placeholder="salasanan tulee olla vähintään 6 merkkiä pitkä" aria-label="aseta uusi salasana" aria-describedby="button-saveNewPassword">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary" type="submit" id="button-saveNewPassword">Tallenna uusi salasana</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </td>
-                    <td>
-                        <form action="controlpanel/updateuser" method="post">
-                            <div class="input-group mt-3">
-                                <check if="{{ @employee.status == '1' }}">
-                                    <true>
-                                        <input name="current" value="{{ @employee.status }}" type="hidden">
-                                        <input name="uid" value="{{ @employee.hid }}" type="hidden">
-                                        <button class="btn btn-warning" type="submit" id="button-disable">Poista käytöstä</button>
-                                    </true>
-                                    <false>
-                                        <input name="current" value="{{ @employee.status }}" type="hidden">
-                                        <input name="uid" value="{{ @employee.hid }}" type="hidden">
-                                        <button class="btn btn-success" type="submit" id="button-enable">Ota käyttöön</button>
-                                    </false>
-                                </check>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-            </repeat>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="controlpanel/updateuser" method="post">
+                                <div class="input-group mt-3">
+                                    <check if="{{ @employee.status == '1' }}">
+                                        <true>
+                                            <input name="current" value="{{ @employee.status }}" type="hidden">
+                                            <input name="uid" value="{{ @employee.hid }}" type="hidden">
+                                            <button class="btn btn-warning" type="submit" id="button-disable">Poista käytöstä</button>
+                                        </true>
+                                        <false>
+                                            <input name="current" value="{{ @employee.status }}" type="hidden">
+                                            <input name="uid" value="{{ @employee.hid }}" type="hidden">
+                                            <button class="btn btn-success" type="submit" id="button-enable">Ota käyttöön</button>
+                                        </false>
+                                    </check>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </repeat>
+           
             </tbody>
         </table>
     </div>

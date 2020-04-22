@@ -1,7 +1,7 @@
 <?php
 
 //autoloader
-require_once('D:\apps\xampp\storage\vendor\autoload.php');
+require_once('D:\applications\xampp\phpMyAdmin\vendor\autoload.php');
 // Kickstart the framework
 $f3 = require('lib/base.php');
 
@@ -26,5 +26,6 @@ if ($f3->get('SESSION.uid') === NULL && !in_array($f3->get('PATH'), $f3->get('pu
     $f3->reroute('/');
     exit;
 }
+
 
 $f3->run();

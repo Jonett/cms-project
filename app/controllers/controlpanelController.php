@@ -11,17 +11,16 @@
  *
  * @author jonih
  */
-class controlpanelController extends controlpanelModel{
+class controlpanelController extends controlpanelModel {
     public function __construct($f3) {
         parent::__construct($f3);
     }
     
     public function controlpanel(){
         $f3 = $this->f3;
-        if($f3->get('SESSION.organisationAdmin') == 1){
-            $f3->set('clients', $this->getClients());
+        $user = new user($f3, $f3->get('SESSION.uid'));
+        if($user->organisationAdmin == 1){
             $f3->set('employees', $this->getEmployees());
-            $f3->set('tools', $this->getTools());
         }
         $f3->set('navMessage', $this->f3->get('SESSION.userEmail'));
         $f3->set('content', 'controlpanel/controlpanel.htm');
@@ -72,48 +71,6 @@ class controlpanelController extends controlpanelModel{
             $user->setPassword($passwordHash);
         }
         $f3->reroute('/logout');
-    }
-    
-    public function updateToolName(){
-        $f3 = $this->f3;
-        $toolName = $f3->clean($f3->get('POST')['name']);
-        $toolHashId = $f3->clean($f3->get('POST')['tool']);
-        $this->setToolName($toolName, $toolHashId);
-        $f3->reroute('/controlpanel');
-    }
-    
-    public function updateToolpph(){
-        $f3 = $this->f3;
-        $toolpph = $f3->clean($f3->get('POST')['pph']);
-        $toolHashId = $f3->clean($f3->get('POST')['tool']);
-        $this->setToolpph($toolpph, $toolHashId);
-        $f3->reroute('/controlpanel');
-    }
-    
-    public function updateToolStatus(){
-        $f3 = $this->f3;
-        $toolHashId = $f3->clean($f3->get('POST')['tool']);
-        $currentStatus = $f3->clean($f3->get('POST')['current']);
-        if($currentStatus != 0 && $currentStatus != 1){
-            $f3->reroute('/logout');
-            exit();
-        }
-        $this->setToolStatus($currentStatus, $toolHashId);
-        $f3->reroute('/controlpanel');
-    }
-    
-    public function newTool(){
-        $f3 = $this->f3;
-        $toolName = $f3->clean($f3->get('POST')['newtoolname']);
-        $toolpph = $f3->clean($f3->get('POST')['newtoolpph']);
-        $oid = $f3->get('SESSION.oid');
-        $this->setNewTool($toolName, $toolpph, $oid);
-        $f3->reroute('/controlpanel');
-    }
-    
-    private function getClients(){
-        $organisationId = $this->f3->get('SESSION.oid');
-        return $this->getClientsArray($organisationId);
     }
     
     private function getEmployees(){

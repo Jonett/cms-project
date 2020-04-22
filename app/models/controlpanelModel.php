@@ -18,7 +18,7 @@ class controlpanelModel extends database{
     
     public function getEmployeeArray($organisationId){
         $database = $this->db;
-        $usersQuery = $database->exec('SELECT id, email, organisationAdmin, status FROM users WHERE oid = '.$organisationId);
+        $usersQuery = $database->exec('SELECT id, email, status FROM users WHERE oid = '.$organisationId);
         $usersArray = array();
         $twoWayEncrypt = new twoWayEncrypt($this->f3->HKEY);
         $count = 0;
