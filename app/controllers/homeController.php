@@ -20,7 +20,7 @@ class homeController extends homeControllerModel{
     public function home(){
         $f3 = $this->f3;
         if($f3->get('SESSION.uid')){
-            $f3->reroute('/punchin');
+            $f3->reroute('/controlpanel');
         }
         $f3->set('content', 'home/home.htm');
         echo \Template::instance()->render('layout.htm');

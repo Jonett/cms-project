@@ -1,0 +1,13 @@
+<div class="col-12">
+    <form action="/admin/newUser" method="POST">
+        <input type="text" class="form-control w-100" placeholder="Email" name="email">
+        <input type="text" class="form-control w-100" placeholder="Password" name="password">
+        <select class="form-control">
+            <option>{{ @currentBusiness }}</option>
+            <repeat group="{{ @businessList }}" key="{{ @businessId }}" value="{{ @businessName }}">
+                <option data-businessId="{{ @businessId }}">{{ @businessName }}</option>
+            </repeat>
+        </select>
+        <button type="submit" class="btn btn-success w-100">Tallenna</button>
+    </form>
+</div>

@@ -20,7 +20,7 @@ class registerationController extends registerationModel{
     public function register(){
         $f3 = $this->f3;
         if($f3->get('SESSION.uid')){
-            $f3->reroute('/punchin');
+            $f3->reroute('/controlpanel');
         }
         $registerationCodeStatus = $f3->get('SESSION.registerationCodeStatus');
         $passwordStatus = $f3->get('SESSION.passwordStatus');

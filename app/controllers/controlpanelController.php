@@ -18,6 +18,11 @@ class controlpanelController extends controlpanelModel {
     
     public function controlpanel(){
         $f3 = $this->f3;
+        
+        //Temp solution for user admin panel
+        $admin = new admin($f3);
+        $f3->set('businessList', $admin->getBusinessArray());
+        $f3->set('usersList', $admin->getUsersArray());
         $user = new user($f3, $f3->get('SESSION.uid'));
         if($user->organisationAdmin == 1){
             $f3->set('employees', $this->getEmployees());

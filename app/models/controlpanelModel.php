@@ -26,7 +26,6 @@ class controlpanelModel extends database{
             $usersArray[$count]['hid'] = $twoWayEncrypt->encrypt($value['id']);
             $usersArray[$count]['id'] = $value['id'];
             $usersArray[$count]['email'] = $value['email'];
-            $usersArray[$count]['organisationAdmin'] = $value['organisationAdmin'];
             $usersArray[$count]['status'] = $value['status'];
             $count++;
         }
