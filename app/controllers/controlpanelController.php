@@ -12,31 +12,46 @@
  * @author jonih
  */
 class controlpanelController extends controlpanelModel {
+
     public function __construct($f3) {
         parent::__construct($f3);
     }
-    
-    public function controlpanel(){
+
+    public function controlpanel() {
         $f3 = $this->f3;
-        
-        //Temp solution for user admin panel
-        $admin = new admin($f3);
-        $f3->set('businessList', $admin->getBusinessArray());
-        $f3->set('usersList', $admin->getUsersArray());
         $user = new user($f3, $f3->get('SESSION.uid'));
-        if($user->organisationAdmin == 1){
-            $f3->set('employees', $this->getEmployees());
+        if ($this->f3->get('SESSION.role') == '1') {
+            $admin = new admin($f3); 
+            $online = new onlineCount($f3);
+            $business = new business($f3, NULL); 
+            $state = new state($f3);
+            $f3->set('content', 'controlpanel/controlpanel.htm');
+            $objectArray = array(
+                "content" => array("controlpanel/controlpanel.htm"),
+                "navMessage" => $this->f3->get('SESSION.userEmail'),
+                "onlineCount" => $online->getCount(),
+                "businessList" => $admin->getBusinessArray(),
+                "usersList" => $admin->getUsersArray(),
+                "fullBusinesslisting" => $business->getFullBusinesslisting(),
+                "collection" => ($f3->get('SESSION.role') == '1' ? $this->getEmployees() : [])
+            );
+            $loadstatus = $state->load($objectArray);
         }
-        $f3->set('navMessage', $this->f3->get('SESSION.userEmail'));
-        $f3->set('content', 'controlpanel/controlpanel.htm');
-        echo \Template::instance()->render('layout.htm');
+            if($loadstatus == "ready"){
+                
+                echo \Template::instance()->render('layout.htm');
+            }else{
+                $user->clearUserSession();
+                $f3->reroute('/');
+            }
+        
     }
-    
-    public function updateUserStatus(){
+
+    public function updateUserStatus() {
         $f3 = $this->f3;
         $userIdHash = $f3->clean($f3->get('POST')['uid']);
         $currentStatus = $f3->clean($f3->get('POST')['current']);
-        if($currentStatus != 0 && $currentStatus != 1){
+        if ($currentStatus != 0 && $currentStatus != 1) {
             $f3->reroute('/logout');
             exit();
         }
@@ -47,8 +62,8 @@ class controlpanelController extends controlpanelModel {
         $user->setStatus($status);
         $f3->reroute('/controlpanel');
     }
-    
-    public function updateUserPassword(){
+
+    public function updateUserPassword() {
         $f3 = $this->f3;
         $userIdHash = $f3->clean($f3->get('POST')['uid']);
         $newPassword = $f3->clean($f3->get('POST')['newPassword']);
@@ -59,34 +74,33 @@ class controlpanelController extends controlpanelModel {
         $user->setPassword($passwordHash);
         $f3->reroute('/controlpanel');
     }
-    
-    public function updateUser(){
+
+    public function updateUser() {
         $f3 = $this->f3;
         $userId = $this->f3->get('SESSION.uid');
         $user = new user($f3, $userId);
-        
-        $email= $f3->clean($f3->get('POST')['email']);
+
+        $email = $f3->clean($f3->get('POST')['email']);
         $password = $f3->clean($f3->get('POST')['password']);
-        
-        if($email != $user->userEmail){
+
+        if ($email != $user->userEmail) {
             $user->setEmail($email);
         }
-        if(strlen($password) > 5){
+        if (strlen($password) > 5) {
             $passwordHash = password_hash($password, PASSWORD_BCRYPT);
             $user->setPassword($passwordHash);
         }
         $f3->reroute('/logout');
     }
-    
-    private function getEmployees(){
+
+    private function getEmployees() {
         $organisationId = $this->f3->get('SESSION.oid');
         return $this->getEmployeeArray($organisationId);
     }
-    private function getTools(){
+
+    private function getTools() {
         $organisationId = $this->f3->get('SESSION.oid');
         return $this->getToolsArray($organisationId);
-    
     }
-    
-    
+
 }

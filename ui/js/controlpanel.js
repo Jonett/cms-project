@@ -1,14 +1,11 @@
 $(function () {
-    $('#workersTable').DataTable();
-    $('#toolsTable').DataTable();
-    $('#clientsTable').DataTable();
     
-    $('#Toolsbtn').click(function(){
-        if($('#tools').hasClass('d-none')){
-            $('#tools').removeClass('d-none'); 
-        }else{
-            $('#tools').addClass('d-none'); 
-        }
-       
-    });
+
 });
+function toggleElement(element) {
+    if (element.hasClass('d-none')) {
+        element.removeClass('d-none');
+    } else {
+        element.addClass('d-none');
+    }
+}

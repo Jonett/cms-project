@@ -19,6 +19,7 @@ class authenticationModel extends database {
 
     public function isUser($email) {
         $emailQuery = ( $email ? $this->db->exec('SELECT email, password FROM users WHERE email = "' . $email . '"') : array() );
+        
         return (count($emailQuery) > 0 ? TRUE : FALSE);
     }
     
@@ -28,6 +29,10 @@ class authenticationModel extends database {
         $userPassword = $passwordQuery[0]['password'];
         $userId = $passwordQuery[0]['id'];
         return array($userId, $userPassword);
+    }
+    public function updateUserPasswordByEmail($email, $passwordHash){
+        $database = $this->db;
+        $database->exec('UPDATE users SET password = "' . $passwordHash . '" WHERE email = "' .$email.'"');
     }
     
 }

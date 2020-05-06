@@ -6,5 +6,6 @@ return array(
     "logout" => 'Kirjaudu ulos',
     "controlpanel" => 'Hallintapaneeli',
     "welcome" => 'Tervetuloa',
-    "admin" => 'Admin'
+    "admin" => 'Admin',
+    "dashboard" => 'Taulut'
 );

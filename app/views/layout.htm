@@ -6,20 +6,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Merriweather|Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{@CSS}}/bootstrap/bootstrap-cerulean.css">
-        <link rel="stylesheet" type="text/css" href="{{@CSS}}/datatables/datatables.min.css"/>
         <link rel="stylesheet" href="{{@CSS}}/base.css">
         <link rel="stylesheet" href="{{@CSS}}/shame.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     </head>
-    <body>
+    <body style="background-color: #2c3e50;">
         <script src="https://kit.fontawesome.com/99c2e04227.js" crossorigin="anonymous"></script>
         <script type="text/javascript" charset="utf-8" src="{{@JS}}/lib/jquery/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         
- 
-        <include href="admin/controlpanel.htm"/>
+        <script type="text/javascript" charset="utf-8" src="{{@JS}}/base.js"></script>
+        <repeat group="{{ @SESSION }}" key="{{ @KEY }}" value="{{ @VALUE }}">
+            <span>{{ @KEY }}: {{ @VALUE }}</span><br>
+        </repeat>
+    
         <include href="navigation/navbar/navbar.htm"/>
         <include href="{{@content}}"/>
-        
-        <script type="text/javascript" src="{{@JS}}/lib/datatables/datatables.min.js"></script>
+
         <script type="text/javascript" charset="utf-8" src="{{@JS}}/lib/popper/popper.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="{{@JS}}/lib/bootstrap/bootstrap.min.js"></script>
     </body>

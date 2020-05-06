@@ -1,0 +1,89 @@
+<script>
+    let userListingState = "{{ @state.hash|raw }}";
+</script>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-header w-100 text-center">
+            <h1>
+                Asiakkaat
+            </h1>
+        </div>
+        <table class="display table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Tiedot</th>
+                </tr>
+            </thead>
+            <tbody id="accordion">
+            <repeat group="{{@state.fullBusinesslisting}}" key="{{ @KEY }}" value="{{ @VALUE }}" counter="{{ @CTR }}">
+                <tr class="card">
+                    <td class="card-header" id="heading-{{ @CTR }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{ @CTR }}" aria-expanded="true" aria-controls="collapse-{{ @CTR }}">
+                                {{ @VALUE.name }}
+                            </button>
+                        </h5>
+                        <div id="collapse-{{ @CTR }}" class="collapse" aria-labelledby="heading-{{ @CTR }}" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="card-text" data-hid="{{ @VALUE.hashOwner }}">Nimi: {{ @VALUE.owner_fullname }}</p>
+                                        <p class="card-text">Osoite: {{ @VALUE.owner_addressData1 }}</p>
+                                        <p class="card-text">Osoite: {{ @VALUE.owner_addressData2 }}</p>
+                                        <p class="card-text">Posti nro.: {{ @VALUE.owner_postNumber }}</p>
+                                        <p class="card-text">Puh nro.: {{ @VALUE.owner_phone }}</p>
+                                        <p class="card-text">S-posti: {{ @VALUE.owner_email }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="card-text">Yritys: {{ @VALUE.name }}</p>
+                                        <p class="card-text">Osoite: {{ @VALUE.adressData1 }}</p>
+                                        <p class="card-text">Osoite: {{ @VALUE.adressData2 }}</p>
+                                        <p class="card-text">Puh: {{ @VALUE.phone }}</p>
+                                        <p class="card-text">S-posti: {{ @VALUE.email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="card-text">Käyttäjät: </p>
+                                        <repeat group="{{ @VALUE.employees }}" key="{{ @em_key }}" value="{{ @em_val }}" counter="{{ @em_ctr }}">
+                                            <div id="em_{{ @em_val.id }}" class="row">
+                                                <div class="col-12">
+                                                    <div class="card-header text-center">
+                                                        <p>
+                                                            Nimi: {{ @em_val.fullName }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </repeat>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="card-text">Asiakkaat: </p>
+                                        <repeat group="{{ @VALUE.clients }}" key="{{ @cli_key }}" value="{{ @cli_val }}" counter="{{ @cli_ctr }}">
+                                            <div id="cli_{{ @cli_val.id }}" class="row">
+                                                <div class="col-12">
+                                                    <div class="card-header text-center">
+                                                        <p>
+                                                            {{ @cli_val.name }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </repeat>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="card-text">Tilastoa: </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </repeat>
+
+            </tbody>
+        </table>
+    </div>
+</div>

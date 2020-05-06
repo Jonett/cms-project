@@ -1,94 +1,155 @@
-<div class="row">
-    <div class="col-xl-12">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card-header w-100 text-center">
-                    <h4>
-                        Työvälineet
-                    </h4>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <table id="toolsTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>Nimi</th>
-                            <th>Tunti hinta</th>
-                            <th>Poista käytöstä</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <repeat group="{{ @tools }}" value="{{ @tool }}">
-                        <tr>
-                            <td>
-                                <form action="controlpanel/updatetoolname" method="post">
-                                    <input name="tool" type="hidden" value="{{ @tool.hid }}">
-                                    <div class="input-group mt-3">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-primary" type="submit" id="button-updateName">Päivitä nimi</button>
-                                        </div>
-                                        <input value="{{ @tool.name }}" name="name" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-updateName">
-                                    </div>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="controlpanel/updatetoolpph" method="post">
-                                    <input name="tool" type="hidden" value="{{ @tool.hid }}">
-                                    <div class="input-group mt-3">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-primary" type="submit" id="button-updatepph">Päivitä hinta</button>
-                                        </div>
-                                        <input value="{{ @tool.pph }}" name="pph" type="number" step="0.01" class="form-control" placeholder="" aria-label="" aria-describedby="button-updatepph">
-                                    </div>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="controlpanel/updatetoolstatus" method="post">
-                                    <check if="{{ @tool.status == '1' }}">
-                                        <true>
-                                        <input name="current" value="{{ @tool.status }}" type="hidden">
-                                        <input name="tool" type="hidden" value="{{ @tool.hid }}">
-                                        <button class="btn btn-warning mt-3" type="submit" id="button-disable-tool">Poista käytöstä</button>
-                                        </true>
-                                        <false>
-                                        <input name="current" value="{{ @tool.status }}" type="hidden">
-                                        <input name="tool" type="hidden" value="{{ @tool.hid }}">
-                                        <button class="btn btn-success mt-3" type="submit" id="button-enable-tool">Ota käyttöön</button>
-                                        </false>
-                                    </check>
-                                </form>
-                            </td>
-                        </tr>
+<script type="text/javascript" charset="utf-8" src="{{@JS}}/admin_tools.js"></script>
+<div id="tools" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <h5 class="card-header w-100">
+                    Valitse yritys:
+                </h5>
+                <select class="form-control" id="businessSelect">
+                    <option>{{ @state.currentBusiness }}</option>
+                    <repeat group="{{ @state.businessList }}" key="{{ @businessId }}" value="{{ @businessName }}">
+                        <option value="{{ @businessId }}">{{ @businessName }}</option>
                     </repeat>
-                    </tbody>
-                </table>
+                </select>
+                <div id="newBusinessAccordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Lisää uusi yritys
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#newBusinessAccordion">
+                            <div class="card-body">
+
+                                <form action="admin/newBusiness" method="POST">
+                                    <div class="row">
+                                        <div class="col-12 mb-0 mt-0">
+                                            Yrityksen Nimi:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <input name="name" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-0 mt-0">
+                                            Yrityksen omistaja:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <select name="owner_id" class="form-control">
+                                                <option>{{ @state.currentUser }}</option>
+                                                <repeat group="{{ @state.usersList }}" key="{{ @userId }}" value="{{ @userEmail }}">
+                                                    <option value="{{ @userId }}">{{ @userEmail }}</option>
+                                                </repeat>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-0 mt-0">
+                                            Tila:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <input name="status" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-12 w-100 mt-1">
+                                            <button class="btn btn-success w-100">Lisää uusi</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
-    </div>
-    <div class="col-xl-6 mt-4">
-        <div class="card-header text-center">
-            <h4>
-                Lisää uusi työväline
-            </h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-10 offset-md-1">
-                    <form action="controlpanel/newtool" method="post">
-                        <div class="form-group row">
-                            <label for="newtoolname">Uuden työvälineen nimi</label>
-                            <input name="newtoolname" type="text" class="form-control" id="newtoolname">
+        <div class="col-sm-4">
+            <div class="card">
+                <h5 class="card-header w-100">
+                    Valitse käyttäjä:
+                </h5>
+                <select class="form-control" id="userSelect">
+                    <option>{{ @state.currentUser }}</option>
+                    <repeat group="{{ @state.usersList }}" key="{{ @userId }}" value="{{ @userEmail }}">
+                        <option value="{{ @userId }}">{{ @userEmail }}</option>
+                    </repeat>
+                </select>
+                <div id="newUserAccordion">
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    Lisää uusi käyttäjä
+                                </button>
+                            </h5>
                         </div>
-                        <div class="form-group row">
-                            <label for="newtoolpph">Tunti hinta</label>
-                            <input name="newtoolpph" type="number" value="00.00" step="0.01" class="form-control" id="newtoolpph">
+
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#newUserAccordion">
+                            <div class="card-body">
+
+                                <form action="admin/createUser" method="POST">
+                                    <div class="row">
+                                        <div class="col-12 mb-0 mt-0">
+                                            Käyttäjän sähköposti:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <input name="email" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-0 mt-0">
+                                            Työntekijän omistaja:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <select class="form-control" name="oid">
+                                                <option value="0">{{ @state.currentBusiness }}</option>
+                                                <repeat group="{{ @state.businessList }}" key="{{ @businessId }}" value="{{ @businessName }}">
+                                                    <option value="{{ @businessId }}">{{ @businessName }}</option>
+                                                </repeat>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-0 mt-0">
+                                            Tila:
+                                        </div>
+                                        <div class="col-12 w-100 mt-1">
+                                            <input name="status" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-12 w-100 mt-1">
+                                            <button class="btn btn-success w-100">Lisää uusi</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
-                        <div class="form-group row mt-5">
-                            <button type="submit" class="btn btn-primary w-100">Tallenna</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h5 class="card-header w-100">
+                    Kirjautuneita käyttäjiä: {{@state.onlineCount}}
+                </h5>
+                <h5 class="card-header w-100">
+                    Vierailijoita: {{@state.visitorCount}} 
+                </h5>
+            </div>
+        </div>
     </div>
+</div>
+<div id="eventContainer" class="container">
+    
 </div>
