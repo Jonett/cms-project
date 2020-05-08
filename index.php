@@ -17,7 +17,6 @@ $f3->set('JS', $f3->UI_EXTRA.'js');
 $f3->set('CSS', $f3->UI_EXTRA.'css');
 $f3->set('ROOT', $f3->ADRS);
 $f3->set('ENCODING', $f3->ENCODING);
-
 $f3->set('LANGUAGE', 'en');
 //routes
 $f3->config('app/routes.ini');
