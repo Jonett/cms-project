@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>
+                           TapahtumaId 
+                        </td>
+                        <td>
+                           Tapahtuma 
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                <repeat group="{{ @state.privateUserlog }}" key="{{ @key }}" value="{{ @val }}" counter="{{ @ctr }}">
+                    <tr id="row_{{ @ctr }}">
+                        <td>
+                            {{ @val.id }}
+                        </td>
+                        <td class="userAction" data-hid="{{ @val.hid }}">
+                            {{ @val.action }}
+                        </td>
+                    </tr>
+                </repeat>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
