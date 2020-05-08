@@ -25,6 +25,7 @@ class controlpanelController extends controlpanelModel {
             $online = new onlineCount($f3);
             $business = new business($f3, NULL);
             $state = new state($f3);
+            $userLog = new userlog($f3);
             $f3->set('content', 'controlpanel/controlpanel.htm');
             $objectArray = array(
                 "content" => array("controlpanel/controlpanel.htm"),
@@ -33,7 +34,8 @@ class controlpanelController extends controlpanelModel {
                 "businessList" => $admin->getBusinessArray(),
                 "usersList" => $admin->getUsersArray(),
                 "fullBusinesslisting" => $business->getFullBusinesslisting(),
-                "collection" => ($f3->get('SESSION.role') == '1' ? $this->getEmployees() : [])
+                "collection" => ($f3->get('SESSION.role') == '1' ? $this->getEmployees() : []),
+                "privateUserlog" =>  $userLog->loadPrivateLog()
             );
             $loadstatus = $state->load($objectArray);
         }
