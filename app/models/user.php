@@ -53,13 +53,7 @@ class user extends database {
     }
 
     public function startUserSession() {
-        if($this->f3->STATS == 'ENABLED'){
-            $online = new onlineCount($this->f3);
-            $online->increase($this->userId);
-            $userLog = new userlog($this->f3);
-            //TODO: FIX THIS CARBAGE
-            $userLog->updateUserLog($userLog->getMessage(1));
-        }
+        
         $this->f3->set('SESSION.uid', $this->userId);
         $this->f3->set('SESSION.userEmail', $this->userEmail);
         $this->f3->set('SESSION.oid', $this->userOid);
@@ -73,6 +67,13 @@ class user extends database {
         $role = new role($this->f3, $this->role);
         $this->f3->set('SESSION.role_name', $role->getRoleName());
         $this->f3->set('SESSION.role', $this->role);
+        if($this->f3->STATS == 'ENABLED'){
+            $online = new onlineCount($this->f3);
+            $online->increase($this->userId);
+            $userLog = new userlog($this->f3);
+            //TODO: FIX THIS CARBAGE
+            $userLog->updateUserLog($userLog->getMessage(1));
+        }
     }
 
     public function clearUserSession() {
