@@ -21,9 +21,9 @@ class controlpanelController extends controlpanelModel {
         $f3 = $this->f3;
         $user = new user($f3, $f3->get('SESSION.uid'));
         if ($this->f3->get('SESSION.role') == '1') {
-            $admin = new admin($f3); 
+            $admin = new admin($f3);
             $online = new onlineCount($f3);
-            $business = new business($f3, NULL); 
+            $business = new business($f3, NULL);
             $state = new state($f3);
             $f3->set('content', 'controlpanel/controlpanel.htm');
             $objectArray = array(
@@ -37,14 +37,13 @@ class controlpanelController extends controlpanelModel {
             );
             $loadstatus = $state->load($objectArray);
         }
-            if($loadstatus == "ready"){
-                
-                echo \Template::instance()->render('layout.htm');
-            }else{
-                $user->clearUserSession();
-                $f3->reroute('/');
-            }
-        
+        if ($loadstatus == "ready") {
+
+            echo \Template::instance()->render('layout.htm');
+        } else {
+            $user->clearUserSession();
+            $f3->reroute('/');
+        }
     }
 
     public function updateUserStatus() {
@@ -79,16 +78,31 @@ class controlpanelController extends controlpanelModel {
         $f3 = $this->f3;
         $userId = $this->f3->get('SESSION.uid');
         $user = new user($f3, $userId);
-
-        $email = $f3->clean($f3->get('POST')['email']);
-        $password = $f3->clean($f3->get('POST')['password']);
-
-        if ($email != $user->userEmail) {
-            $user->setEmail($email);
+        $postEmail = $f3->clean($f3->get('POST')['email']);
+        $postPassword = $user->$f3->clean($f3->get('POST')['password']);
+        $postFullName = $f3->clean($f3->get('POST')['fullName']);
+        $postAddressData1 = $f3->clean($f3->get('POST')['addressData1']);
+        $postAddressData2 = $f3->clean($f3->get('POST')['addressData2']);
+        $postPostNumber = $f3->clean($f3->get('POST')['postNumber']);
+        $postPhone = $f3->clean($f3->get('POST')['phone']);
+        $userDataArray = array(
+            "email" => ($user->userEmail == $postEmail ? NULL : $postEmail),
+            "password" => (strlen($postPassword) > 5 ? password_hash($postPassword, PASSWORD_BCRYPT) : NULL ),
+            "fullName" => ($user->fullName == $postFullName ? NULL : $postFullName),
+            "addressData1" => ($user->addressData1 == $postAddressData1 ? NULL : $postAddressData1),
+            "addressData1" => ($user->addressData2 == $postAddressData2 ? NULL : $postAddressData2),
+            "postNumber" => ($user->postNumber == $postPostNumber ? NULL : $postPostNumber),
+            "phone" => ($user->phone == $postPhone ? NULL : $postPhone),
+            "role" => $f3->clean($f3->get('POST')['role'])
+        );
+        if ($userDataArray["password"] != NULL) {
+            $user->setPassword($userDataArray["password"]);
         }
-        if (strlen($password) > 5) {
-            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-            $user->setPassword($passwordHash);
+        
+        if ($this->f3->STATS == 'ENABLED') {
+            $userLog = new userlog($f3);
+            //TODO: FIX THIS CARBAGE
+            $userLog->updateUserLog($userLog->getMessage(0), $userDataArray);
         }
         $f3->reroute('/logout');
     }

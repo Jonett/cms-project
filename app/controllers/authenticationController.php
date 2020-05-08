@@ -71,7 +71,7 @@ class authenticationController extends authenticationModel {
         $this->f3->reroute('/');
     }
 
-    private function autheticateUser($email, $password) {
+    protected function autheticateUser($email, $password) {
         //0 = id, 1 = pwdhash
         $userData = $this->getUserCredentials($email);
         $result = password_verify($password, $userData[1]);
