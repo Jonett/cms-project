@@ -1,4 +1,23 @@
 <?php
+//filepaths etc for startup
+$conf = "../src/configs/";
+$files = [
+    "globals" => $conf."globals.ini",
+    "routes" => $conf."routes.ini",
+    "minify" => $conf."minify.ini"
+];
+//autoload
+require_once "../vendor/autoload.php";
+//load fatfree core
+$f3 = Base::instance();
+//load settings
+foreach($files as $key => $value){
+    $f3->config($value);
+}
+
+
+
+
 
 //autoloader
 require_once('D:\applications\xampp\phpMyAdmin\vendor\autoload.php');
