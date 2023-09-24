@@ -1,0 +1,25 @@
+{
+    "name": "jonih/cms-project",
+    "description": "web cms",
+    "type": "project",
+    "require": {
+        "bcosca/fatfree-core": "dev-master",
+        "matthiasmullie/minify": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.6.x-dev"
+    },
+    "license": "Open",
+    "autoload": {
+        "psr-4": {
+            "Jonih\\CmsProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joni",
+            "email": "joni.hell@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

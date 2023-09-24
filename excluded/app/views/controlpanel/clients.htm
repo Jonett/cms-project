@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-header w-100 text-center">
+                    <h4>
+                        Asiakkaat
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <table id="clientsTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Nimi</th>
+                            <th>Osoite</th>
+                            <th>Yhteystiedot</th>
+                            <th>Muokkaa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <repeat group="{{ @clients }}" value="{{ @client }}">
+                        <tr>
+                            <td>{{ @client.name }}</td>
+                            <td>{{ @client.streetaddress }}<br>{{ @client.postcode }} {{ @client.postarea }}</td>
+                            <td>{{ @client.email }}<br>{{ @client.phonenumber }}</td>
+                            <td><button id="editClient" data-hid="{{ @client.hid }}" type="button" class="btn btn-primary w-100">Muokkaa</button></td>
+                        </tr>
+                    </repeat>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 mt-4">
+        <div class="card-header text-center">
+            <h4>
+                Lisää uusi asiakas
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-10 offset-md-1">
+                    {*<form action="" method="post">
+                        <div class="form-group row">
+                            <label for="">Uuden työvälineen nimi</label>
+                            <input name="" type="text" class="form-control" id="">
+                        </div>
+                        
+                        <div class="form-group row mt-5">
+                            <button type="submit" class="btn btn-primary w-100">Tallenna</button>
+                        </div>
+                    </form>*}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

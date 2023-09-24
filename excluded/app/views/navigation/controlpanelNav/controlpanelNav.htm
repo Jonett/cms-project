@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs" id="controlpanelTabs" role="tablist">
+    <check if="{{ @SESSION.organisationAdmin == 1 }}">
+        <true>
+            <li class="nav-item">
+                <a class="nav-link active" id="usersListing-tab" data-toggle="tab" href="#usersListing" role="tab" aria-controls="usersListing" aria-selected="true">Käyttäjät</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tools-tab" data-toggle="tab" href="#toolsListing" role="tab" aria-controls="toolsListing" aria-selected="true">Työkalut</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">Omat tiedot</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " id="userLog-tab" data-toggle="tab" href="#userLog" role="tab" aria-controls="userLog" aria-selected="true">Käyttäjäseuranta</a>
+            </li>
+        </true>
+        <false>
+            <li class="nav-item">
+                <a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">Omat tiedot</a>
+            </li>
+        </false>
+    </check>
+</ul>
